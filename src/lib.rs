@@ -1,4 +1,5 @@
 pub mod events;
+pub mod mpsc;
 pub mod strsplit;
 
 #[cfg(test)]
@@ -19,5 +20,13 @@ mod tests {
         events.on("hello", |v| assert_eq!(v, "world"));
         events.emit("hello", &"world".to_string());
         events.emit("hello", &String::from("world"));
+    }
+
+    #[test]
+    fn mpsc_pig_pong() {
+        let (mut tx, mut rx) = mpsc::channel();
+        tx.send(42);
+
+        assert_eq!(rx.recv(), Some(42))
     }
 }
