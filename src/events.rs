@@ -12,15 +12,14 @@ impl<T> EventEmiter<T> {
         let listener = Listener {
             listener,
             name: String::from(name),
-            once: true,
         };
         self.listeners.push(listener)
     }
     pub fn emit(&mut self, name: &str, value: &T) {
         for item in self.listeners.iter() {
             if name == item.name {
-             let func =  item.listener;
-             func(value);
+                let func = item.listener;
+                func(value);
             }
         }
     }
@@ -28,6 +27,5 @@ impl<T> EventEmiter<T> {
 
 struct Listener<T> {
     name: String,
-    once: bool,
     listener: fn(_: &T),
 }
