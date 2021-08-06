@@ -11,21 +11,21 @@ impl<T> EventEmiter<T> {
     pub fn on(&mut self, name: &str, listener: fn(_: &T)) {
         let listener = Listener {
             listener,
-            name: String::from(name),
+            key: String::from(name),
         };
         self.listeners.push(listener)
     }
     pub fn emit(&mut self, name: &str, value: &T) {
         for item in self.listeners.iter() {
-            if name == item.name {
-                let func = item.listener;
-                func(value);
+            let Listener { key, listener } = item;
+            if name == key {
+                listener(value);
             }
         }
     }
 }
 
 struct Listener<T> {
-    name: String,
+    key: String,
     listener: fn(_: &T),
 }
