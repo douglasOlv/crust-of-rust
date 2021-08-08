@@ -1,3 +1,4 @@
+pub mod bloom;
 pub mod events;
 pub mod mpsc;
 pub mod strsplit;
@@ -28,5 +29,15 @@ mod tests {
         tx.send(42);
 
         assert_eq!(rx.recv(), Some(42))
+    }
+
+    #[test]
+    fn bloom_filter() {
+        let mut bloom = bloom::Bloom::new(10);
+        bloom.push(&30);
+        assert!(bloom.contains(&30));
+        assert!(!bloom.contains(&42));
+        bloom.push(&42);
+        assert!(bloom.contains(&42));
     }
 }
