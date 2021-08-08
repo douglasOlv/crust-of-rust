@@ -33,7 +33,7 @@ mod tests {
 
     #[test]
     fn bloom_filter() {
-        let mut bloom = bloom::Bloom::new(10);
+        let mut bloom = bloom::Bloom::new();
         bloom.push(&30);
         assert!(bloom.contains(&30));
         assert!(!bloom.contains(&42));
